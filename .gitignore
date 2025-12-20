@@ -10,8 +10,6 @@
 *.obj
 *.orig
 *.rej
-*.so
-*.so.*
 *_pch.h.cpp
 *_resource.rc
 *.qm
@@ -40,6 +38,9 @@ Thumbs.db
 *.qbs.user*
 CMakeLists.txt.user*
 
+# build folder
+build
+
 # xemacs temporary files
 *.flc
 
@@ -64,14 +65,6 @@ CMakeLists.txt.user*
 # MinGW generated files
 *.Debug
 *.Release
-
-# Python byte code
-*.pyc
-
-# Binaries
-# --------
-*.dll
-*.exe
 
 # Directories with generated files
 .moc/
