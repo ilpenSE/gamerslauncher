@@ -4,8 +4,8 @@
 #include "logger.h"
 #include "loggerstream.hpp"
 
-#include "mgr/appdatamgr.hpp"
-#include "mgr/settingsmgr.hpp"
+#include "mgr/appdata.hpp"
+#include "mgr/settings.hpp"
 
 #include "etc/instances.hpp"
 #include <QDebug>
@@ -30,19 +30,32 @@ int main(int argc, char *argv[]) {
   }
 
   // appdata init
-  if (!AppDataManager::instance().init()) {
+  auto appDataInitResult = _appdataman().init();
+  if (appDataInitResult.isError()) {
     lerr << "Cannot initialize AppDataManager!";
+    lerr << appDataInitResult.errormsg();
     return -1;
   }
 
   // settings mgr init
-  if (!_settingsman().init()) {
+  auto settingsInitResult = _settingsman().init();
+  if (settingsInitResult.isError()) {
     lerr << "Cannot initialize SettingsManager!";
+    lerr << settingsInitResult.errormsg();
     return -1;
   }
-  if (!_settingsman().validateJson()) {
+
+  // validate settings
+  auto settingsValidateResult = _settingsman().validateJson();
+  if (settingsValidateResult.isError()) {
     lerr << "Settings validation failed!";
+    lerr << settingsValidateResult.errormsg();
     return -1;
+  }
+
+  // change lang on first run and flag first run as true
+  if (_settingsman().get("FirstRun").value().toBool()) {
+    _settingsman().set("FirstRun", false);
   }
 
   return app.exec();

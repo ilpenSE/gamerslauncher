@@ -1,10 +1,9 @@
 #ifndef ENUMS
 #define ENUMS
 
-#include <QString>
+#include "string.hpp"
 #include <QMap>
 
-// =========== ENUMS ===========
 enum class Language {
   ENGLISH, TURKISH, GERMAN
 };
@@ -29,7 +28,7 @@ struct Language_s {
     }
   }
 
-  inline static Language fromString(const QString& str) {
+  inline static Language fromString(ConstString str) {
     return map.value(str, Language::ENGLISH);
   }
 };
@@ -52,7 +51,7 @@ struct ClientType_s {
     }
   }
 
-  inline static ClientType fromString(const QString& str) {
+  inline static ClientType fromString(ConstString str) {
     return map.value(str, ClientType::VANILLA);
   }
 };

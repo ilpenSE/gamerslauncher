@@ -2,6 +2,7 @@
 #define APPDATAMANAGER
 
 #include <QObject>
+#include "../etc/result.hpp"
 
 class AppDataManager : public QObject {
   Q_OBJECT
@@ -14,14 +15,12 @@ class AppDataManager : public QObject {
   static QString cfgPath(); // configs, general
   static QString mcPath(); // .minecraft
   static QByteArray logsPath(); // cfg/logs
-  bool init();
+  ErrorOrNot init();
 
  private:
   explicit AppDataManager(QObject* parent = nullptr) : QObject(parent) {}
-
   AppDataManager(const AppDataManager&) = delete;
   AppDataManager& operator=(const AppDataManager&) = delete;
-
   ~AppDataManager() override = default;
 };
 

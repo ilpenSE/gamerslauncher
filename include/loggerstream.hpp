@@ -4,7 +4,7 @@
 #include <sstream>
 #include <string>
 #include "logger.h"
-#include <QString>
+#include <src/etc/result.hpp>
 
 class LoggerStream {
  public:
@@ -22,8 +22,10 @@ class LoggerStream {
 
   template <typename T>
   LoggerStream& operator<<(const T& value) {
-    if constexpr (std::is_same_v<T, QString>) {
+    if constexpr (std::is_same_v<T, QString> || std::is_same_v<T, String>) {
       m_buffer << value.toStdString();
+    } else if constexpr (std::is_same_v<T, Error>) {
+      m_buffer << value.message.toStdString();
     } else {
       m_buffer << value;
     }

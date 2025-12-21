@@ -21,16 +21,24 @@ qt_add_qml_module(appGamersLauncher
         qml/Main.qml
     RESOURCES
         # ===== CLASSES WITH CPP =====
-        SOURCES src/mgr/appdatamgr.hpp src/mgr/appdatamgr.cpp
-        SOURCES src/mgr/settingsmgr.hpp src/mgr/settingsmgr.cpp
+        SOURCES src/mgr/appdata.hpp src/mgr/appdata.cpp
+        SOURCES src/mgr/settings.hpp src/mgr/settings.cpp
 
         # ===== CLASSES WITHOUT CPP =====
-        SOURCES src/mgr/versionmgr.hpp
+        SOURCES src/mgr/version.hpp
 
         # ===== ETC FILES =====
         SOURCES src/etc/instances.hpp
         SOURCES src/etc/utils.hpp
         SOURCES src/etc/enums.hpp
+        SOURCES src/etc/result.hpp
+        SOURCES src/etc/string.hpp
+
+        # ===== UTIL FILES =====
+        SOURCES src/util/jsonvalidator.hpp src/util/jsonvalidator.cpp
+        SOURCES src/util/jsonworker.hpp src/util/jsonworker.cpp
+        SOURCES
+        SOURCES src/util/jsonstructs.hpp
 )
 
 # ===== INCLUDES =====
