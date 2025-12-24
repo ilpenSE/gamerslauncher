@@ -77,5 +77,6 @@ class String {
 };
 
 using ConstString = const String&;
+using ConstQString = const QString&;
 
 #endif

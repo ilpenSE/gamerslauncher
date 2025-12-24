@@ -1,5 +1,5 @@
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
+#include <QApplication>
+#include <iostream>
 
 #include "logger.h"
 #include "loggerstream.hpp"
@@ -8,24 +8,17 @@
 #include "mgr/settings.hpp"
 
 #include "etc/instances.hpp"
-#include <QDebug>
+#include "etc/enums.hpp"
 
 int main(int argc, char *argv[]) {
   QCoreApplication::setOrganizationName("");
   QCoreApplication::setApplicationName("GamersLauncher");
-
-  // App init
   QGuiApplication app(argc, argv);
   QQmlApplicationEngine engine;
-  QObject::connect(
-      &engine, &QQmlApplicationEngine::objectCreationFailed, &app,
-      []() { QCoreApplication::exit(-1); }, Qt::QueuedConnection);
-  engine.loadFromModule("GamersLauncher", "Main");
 
   // Logger init
-  qDebug() << AppDataManager::logsPath().constData();
   if (!logger_init(AppDataManager::logsPath().constData(), 1)) {
-    qDebug() << "Cannot initialize the logger!";
+    std::cerr << "Cannot initialize the logger!\n";
     return -1;
   }
 
@@ -33,7 +26,7 @@ int main(int argc, char *argv[]) {
   auto appDataInitResult = _appdataman().init();
   if (appDataInitResult.isError()) {
     lerr << "Cannot initialize AppDataManager!";
-    lerr << appDataInitResult.errormsg();
+    lerr << appDataInitResult.error();
     return -1;
   }
 
@@ -41,7 +34,7 @@ int main(int argc, char *argv[]) {
   auto settingsInitResult = _settingsman().init();
   if (settingsInitResult.isError()) {
     lerr << "Cannot initialize SettingsManager!";
-    lerr << settingsInitResult.errormsg();
+    lerr << settingsInitResult.error();
     return -1;
   }
 
@@ -49,14 +42,30 @@ int main(int argc, char *argv[]) {
   auto settingsValidateResult = _settingsman().validateJson();
   if (settingsValidateResult.isError()) {
     lerr << "Settings validation failed!";
-    lerr << settingsValidateResult.errormsg();
+    lerr << settingsValidateResult.error();
+    return -1;
+  }
+
+  // App init
+  QObject::connect(
+      &engine, &QQmlApplicationEngine::objectCreationFailed, &app,
+      []() { QCoreApplication::exit(-1); }, Qt::QueuedConnection);
+
+  // init language mgr
+  auto languageInitResult = _langman().init();
+  if (languageInitResult.isError()) {
+    lerr << "Cannot initialize LanguageManager!";
+    lerr << languageInitResult.error();
     return -1;
   }
 
   // change lang on first run and flag first run as true
   if (_settingsman().get("FirstRun").value().toBool()) {
+    Language systemLang = _langman().getSystemLanguage();
     _settingsman().set("FirstRun", false);
+    _langman().changeLanguage(systemLang);
   }
 
+  engine.loadFromModule("GamersLauncher", "Main");
   return app.exec();
 }

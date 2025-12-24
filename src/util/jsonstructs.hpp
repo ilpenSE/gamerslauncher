@@ -8,7 +8,6 @@
 struct JsonType;
 struct JsonConstraint;
 
-
 struct JsonType {
   uint32_t value;
 

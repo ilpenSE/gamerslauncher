@@ -28,11 +28,12 @@ class SettingsManager : public QObject {
   ErrorOrNot validateJson();
 
   // get/set a setting
-  // 0 = set success, 1 = nothing changed, -1 = doesnt contain fieldName
   ErrorOrNot set(ConstString fieldName, QJsonValue newValue);
   // if returned is empty, settings doesnt contain fieldName
   Expected<QJsonValue> get(ConstString fieldName);
 
+  // get defaults
+  String getDefaultLanguage() { return settingsSchema[0].defaultValue.toString(); };
  private:
   QJsonObject m_settings = {
       {"Language", "en"}, {"Version", VERSION_STR}, {"MinecraftVersion", "latest"},

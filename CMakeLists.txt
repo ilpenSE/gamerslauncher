@@ -5,40 +5,63 @@ project(GamersLauncher VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick)
-find_package(Qt6 REQUIRED COMPONENTS Core)
+# ===== QT PACKAGES =====
+find_package(Qt6 REQUIRED COMPONENTS
+    Core
+    Widgets
+    LinguistTools
+)
 
 qt_standard_project_setup(REQUIRES 6.8)
 
-qt_add_executable(appGamersLauncher
-    src/main.cpp
+
+# ===== TRANSLATIONS =====
+set(TS_FILES
+    assets/translations/tr.ts
+    assets/translations/en.ts
+    assets/translations/de.ts
 )
 
-qt_add_qml_module(appGamersLauncher
-    URI GamersLauncher
-    VERSION 1.0
-    QML_FILES
-        qml/Main.qml
-    RESOURCES
-        # ===== CLASSES WITH CPP =====
-        SOURCES src/mgr/appdata.hpp src/mgr/appdata.cpp
-        SOURCES src/mgr/settings.hpp src/mgr/settings.cpp
+# ===== EXECUTABLE =====
+qt_add_executable(appGamersLauncher
+    src/main.cpp
 
-        # ===== CLASSES WITHOUT CPP =====
-        SOURCES src/mgr/version.hpp
+    # ===== UI =====
+    src/ui/mainwindow.h
+    src/ui/mainwindow.cpp
+    src/ui/mainwindow.ui
 
-        # ===== ETC FILES =====
-        SOURCES src/etc/instances.hpp
-        SOURCES src/etc/utils.hpp
-        SOURCES src/etc/enums.hpp
-        SOURCES src/etc/result.hpp
-        SOURCES src/etc/string.hpp
+    # ===== MANAGERS =====
+    src/mgr/appdata.hpp src/mgr/appdata.cpp
+    src/mgr/settings.hpp src/mgr/settings.cpp
+    src/mgr/language.hpp src/mgr/language.cpp
 
-        # ===== UTIL FILES =====
-        SOURCES src/util/jsonvalidator.hpp src/util/jsonvalidator.cpp
-        SOURCES src/util/jsonworker.hpp src/util/jsonworker.cpp
-        SOURCES
-        SOURCES src/util/jsonstructs.hpp
+    # ===== HEADER-ONLY =====
+    src/mgr/version.hpp
+    src/etc/instances.hpp
+    src/etc/utils.hpp
+    src/etc/enums.hpp
+    src/etc/result.hpp
+    src/etc/string.hpp
+
+    # ===== UTIL =====
+    src/util/jsonvalidator.hpp src/util/jsonvalidator.cpp
+    src/util/jsonworker.hpp src/util/jsonworker.cpp
+    src/util/jsonstructs.hpp
+)
+
+# ===== TRANSLATION TOOLS =====
+qt_add_lupdate(appGamersLauncher
+    TS_FILES ${TS_FILES}
+    SOURCES
+        src/main.cpp
+        src/ui
+        src/mgr
+        src/util
+)
+
+qt_add_lrelease(appGamersLauncher
+    TS_FILES ${TS_FILES}
 )
 
 # ===== INCLUDES =====
@@ -46,7 +69,14 @@ target_include_directories(appGamersLauncher PRIVATE
     ${CMAKE_SOURCE_DIR}/include
 )
 
-# ===== DYNAMIC LIBRARY LINKS =====
+# ===== QT LINK =====
+target_link_libraries(appGamersLauncher
+    PRIVATE
+        Qt6::Core
+        Qt6::Widgets
+)
+
+# ===== LOGGER LIB =====
 if (WIN32)
     target_link_libraries(appGamersLauncher PRIVATE
         ${CMAKE_SOURCE_DIR}/lib/win32/liblogger.dll.a
@@ -57,20 +87,16 @@ elseif (UNIX)
     )
 endif()
 
-# ===== QT LINK =====
-target_link_libraries(appGamersLauncher
-    PRIVATE Qt6::Quick
-)
-target_link_libraries(appGamersLauncher PRIVATE Qt6::Core)
-
+# ===== TARGET PROPERTIES =====
 set_target_properties(appGamersLauncher PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
 
+# ===== INSTALL =====
 include(GNUInstallDirs)
 install(TARGETS appGamersLauncher
     BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
