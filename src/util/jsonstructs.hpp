@@ -2,7 +2,7 @@
 #define JSONSTRUCTS
 
 #include <QVector>
-#include "../etc/string.hpp"
+#include <etc/string.hpp>
 
 // forward decleration
 struct JsonType;

@@ -6,7 +6,7 @@
 #include <QJsonValue>
 
 #include "version.hpp"
-#include "../etc/result.hpp"
+#include <etc/result.hpp>
 #include "../util/jsonstructs.hpp"
 
 #ifndef SETTINGS_JSON_NAME

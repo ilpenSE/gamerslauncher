@@ -1,7 +1,7 @@
 #ifndef JSONVALIDATOR
 #define JSONVALIDATOR
 
-#include "../etc/result.hpp"
+#include <etc/result.hpp>
 #include "jsonstructs.hpp"
 
 #include <QJsonValue>

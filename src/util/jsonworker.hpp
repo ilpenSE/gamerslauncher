@@ -7,8 +7,8 @@
 #include <QFile>
 #include <QJsonValue>
 
-#include "../etc/result.hpp"
-#include "../etc/string.hpp"
+#include <etc/result.hpp>
+#include <etc/string.hpp>
 
 /**
  * Object/Array:

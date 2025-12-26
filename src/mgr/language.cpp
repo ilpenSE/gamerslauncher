@@ -1,9 +1,9 @@
 #include "language.hpp"
 #include <QLocale>
-#include <QGuiApplication>
-#include "../etc/instances.hpp"
-#include "../etc/enums.hpp"
+#include <etc/instances.hpp>
+#include <etc/enums.hpp>
 
+#include <QApplication>
 #include "loggerstream.hpp"
 
 ErrorOrNot LanguageManager::init() {

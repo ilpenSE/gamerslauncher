@@ -4,7 +4,7 @@
 #include <QDir>
 
 #include "loggerstream.hpp"
-#include "../etc/utils.hpp"
+#include <etc/utils.hpp>
 
 QString AppDataManager::cfgPath() {
   return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);

@@ -30,6 +30,10 @@ class String {
   std::string toStdString() const {
     return str.toStdString();
   }
+
+  QString toQString() const {
+    return str;
+  }
  private:
   QString str;
 

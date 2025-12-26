@@ -4,9 +4,9 @@
 #include <QObject>
 #include <QTranslator>
 
-#include "../etc/result.hpp"
-#include "../etc/string.hpp"
-#include "../etc/enums.hpp"
+#include <etc/result.hpp>
+#include <etc/string.hpp>
+#include <etc/enums.hpp>
 
 class LanguageManager : public QObject {
   Q_OBJECT
@@ -23,7 +23,7 @@ class LanguageManager : public QObject {
   // gets system language from OS
   Language getSystemLanguage();
 
-  // init and SEPERATE engine
+  // init
   ErrorOrNot init();
 
   QString currentLanguage() const { return m_currentLanguage; }

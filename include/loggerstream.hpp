@@ -4,7 +4,7 @@
 #include <sstream>
 #include <string>
 #include "logger.h"
-#include <src/etc/result.hpp>
+#include <etc/result.hpp>
 
 class LoggerStream {
  public:

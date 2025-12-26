@@ -2,7 +2,7 @@
 #define APPDATAMANAGER
 
 #include <QObject>
-#include "../etc/result.hpp"
+#include <etc/result.hpp>
 
 class AppDataManager : public QObject {
   Q_OBJECT
