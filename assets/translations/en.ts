@@ -6,7 +6,7 @@
 
 <message>
     <source>welcome</source>
-    <translation>Welcome To Launcher!<translation>
+    <translation>Welcome To Launcher!</translation>
 </message>
 
 </context>

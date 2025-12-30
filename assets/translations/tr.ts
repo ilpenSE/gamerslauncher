@@ -5,7 +5,7 @@
 <name>MainWindow</name>
 <message>
     <source>welcome</source>
-    <translation>Başlatıcıya Hoş Geldiniz!<translation>
+    <translation>Başlatıcıya Hoş Geldiniz!</translation>
 </message>
 </context>
 </TS>

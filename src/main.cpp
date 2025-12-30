@@ -65,10 +65,12 @@ int main(int argc, char *argv[]) {
   if (_settingsman().get("FirstRun").value().toBool()) {
     Language systemLang = _langman().getSystemLanguage();
     _settingsman().set("FirstRun", false);
-    _langman().changeLanguage(systemLang);
+    _langman().changeLanguage(systemLang, true);
+  } else {
+    _langman().changeLanguage(_settingsman().get("Language").value().toString(), true);
   }
 
   MainWindow w;
   w.show();
-  return app.exec();  
+  return app.exec();
 }

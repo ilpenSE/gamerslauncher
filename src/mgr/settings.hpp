@@ -34,6 +34,9 @@ class SettingsManager : public QObject {
 
   // get defaults
   String getDefaultLanguage() { return settingsSchema[0].defaultValue.toString(); };
+
+  // quick wrapper
+  ErrorOrNot saveOrCreateJson();
  private:
   QJsonObject m_settings = {
       {"Language", "en"}, {"Version", VERSION_STR}, {"MinecraftVersion", "latest"},
@@ -53,9 +56,6 @@ class SettingsManager : public QObject {
 
   // if this is true, this should mean settings are corrupted
   bool needsUpdate = false;
-
-  // quick wrapper
-  ErrorOrNot saveOrCreateJson();
 
   // singleton utils
   explicit SettingsManager(QObject* parent = nullptr) : QObject(parent) {}

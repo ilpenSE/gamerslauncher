@@ -23,11 +23,6 @@ set(TS_FILES
     assets/translations/de.ts
 )
 
-# ===== QRC FILES =====
-set(QRC_FILES
-    translations.qrc
-)
-
 # ===== EXECUTABLE =====
 qt_add_executable(appGamersLauncher
     src/main.cpp
@@ -54,11 +49,10 @@ qt_add_executable(appGamersLauncher
     src/util/jsonvalidator.hpp src/util/jsonvalidator.cpp
     src/util/jsonworker.hpp src/util/jsonworker.cpp
     src/util/jsonstructs.hpp
-
-    ${QRC_FILES}
 )
 
 # ===== TRANSLATION TOOLS =====
+# ===== FUCK EVERY QT "DEVELOPER" =====
 qt_add_lupdate(appGamersLauncher
     TS_FILES ${TS_FILES}
     SOURCES
@@ -70,8 +64,23 @@ qt_add_lupdate(appGamersLauncher
 
 qt_add_lrelease(appGamersLauncher
     TS_FILES ${TS_FILES}
-    OUTPUT_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/assets/translations
+    QM_FILES_OUTPUT_VARIABLE QM_FILES
 )
+
+# whatever the fuck is this but it works DONT TOUCH IT
+foreach(qm ${QM_FILES})
+    get_filename_component(qm_name ${qm} NAME)
+    set_source_files_properties(${qm}
+        PROPERTIES
+            QT_RESOURCE_ALIAS ${qm_name}
+    )
+endforeach()
+
+qt_add_resources(appGamersLauncher translations_qm
+    PREFIX "/assets/translations"
+    FILES ${QM_FILES}
+)
+# =========================
 
 # ===== INCLUDES =====
 target_include_directories(appGamersLauncher PRIVATE
@@ -104,6 +113,11 @@ endif()
 set_target_properties(appGamersLauncher PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
+)
+
+# ===== COMPILER FLAGS =====
+target_compile_options(appGamersLauncher PRIVATE
+    $<$<CONFIG:Debug>:-g;-O0>
 )
 
 # ===== INSTALL =====

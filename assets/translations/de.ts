@@ -5,7 +5,7 @@
 <name>MainWindow</name>
 <message>
     <source>welcome</source>
-    <translation>Wilkommen zu Launcher!<translation>
+    <translation>Wilkommen zu Launcher!</translation>
 </message>
 </context>
 </TS>

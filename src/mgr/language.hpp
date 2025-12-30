@@ -17,8 +17,8 @@ class LanguageManager : public QObject {
   }
 
   // change languages
-  bool changeLanguage(Language lang);
-  bool changeLanguage(ConstQString lang);
+  bool changeLanguage(Language lang, bool force = false);
+  bool changeLanguage(ConstQString lang, bool force = false);
 
   // gets system language from OS
   Language getSystemLanguage();
