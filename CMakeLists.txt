@@ -14,6 +14,7 @@ find_package(Qt6 REQUIRED COMPONENTS
     Widgets
     WidgetsTools
     LinguistTools
+    Network
 )
 
 # ===== TRANSLATIONS =====
@@ -49,6 +50,8 @@ qt_add_executable(appGamersLauncher
     src/util/jsonvalidator.hpp src/util/jsonvalidator.cpp
     src/util/jsonworker.hpp src/util/jsonworker.cpp
     src/util/jsonstructs.hpp
+    src/ui/logindialog.h src/ui/logindialog.cpp src/ui/logindialog.ui
+    src/mgr/download.hpp src/mgr/download.cpp
 )
 
 # ===== TRANSLATION TOOLS =====
@@ -96,6 +99,7 @@ target_link_libraries(appGamersLauncher
     PRIVATE
         Qt6::Core
         Qt6::Widgets
+        Qt6::Network
 )
 
 # ===== LOGGER LIB =====

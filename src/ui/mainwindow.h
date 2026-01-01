@@ -17,6 +17,7 @@ class MainWindow : public QMainWindow {
  public slots:
   void retranslate();
  private:
+  void connectSlots();
   Ui::MainWindow *ui;
 };
 
